@@ -1,0 +1,17 @@
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  create-release:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+
+      - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: .github/release-creator/create-github-release.sh ${GITHUB_REF#refs/heads/} benjihiggins discord-rss-fetcher
